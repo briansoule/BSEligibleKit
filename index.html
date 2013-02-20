@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Bseligiblekit : An intuitive and concise library for inserting Eligible data into your iOS project." />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Bseligiblekit</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/briansoule/BSEligibleKit">View on GitHub</a>
+
+          <h1 id="project_title">Bseligiblekit</h1>
+          <h2 id="project_tagline">An intuitive and concise library for inserting Eligible data into your iOS project.</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/briansoule/BSEligibleKit/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/briansoule/BSEligibleKit/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <p>The following will pull eligible data, and asnychronously execute your code when it's finished:</p>
+
+<div class="highlight"><pre><span class="p">[</span><span class="n">BSEligibleKit</span> <span class="nl">getDataFor:</span><span class="s">@"service/all"</span> <span class="nl">withParams:</span><span class="n">formData</span> <span class="nl">success:</span><span class="o">^</span><span class="p">(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">//Do things!</span>
+  <span class="n">label</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="p">[</span><span class="n">data</span> <span class="nl">objectForKey:</span><span class="s">@"coverage_status"</span><span class="p">];</span>
+<span class="p">}</span> 
+<span class="nl">failure:</span><span class="o">^</span><span class="p">(</span><span class="n">NSError</span> <span class="o">*</span><span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">label</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="p">[</span><span class="n">error</span> <span class="n">localizedDescription</span><span class="p">];</span>
+<span class="p">}];</span>
+</pre></div>
+
+<h1>Getting Started</h1>
+
+<p>If you haven't already: sign up for an account at <a href="https://eligibleapi.com/users/sign_up">EligibleApi.com</a></p>
+
+<p>Clone the project into your app directory: (use --recursive to include dependencies)</p>
+
+<pre lang="terminal"><code>git clone --recursive git@github.com:briansoule/BSEligibleKit.git
+</code></pre>
+
+<p>Then drag the BSEligibleKit folder into your XCode project.</p>
+
+<p>in your AppDelegate.m file add:</p>
+
+<div class="highlight"><pre><span class="cp">#import "BSEligibleKit.h"</span>
+</pre></div>
+
+<p>Get your <a href="https://eligibleapi.com/profile/information">API_KEY</a>, and have it ready for the next step:</p>
+
+<p>Add the following into your didFinishLaunchingWithOptions method like so:</p>
+
+<div class="highlight"><pre><span class="k">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nf">application:</span><span class="p">(</span><span class="n">UIApplication</span> <span class="o">*</span><span class="p">)</span><span class="nv">application</span> <span class="nf">didFinishLaunchingWithOptions:</span><span class="p">(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nv">launchOptions</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">BSEligibleKit</span> <span class="nl">getEligible:</span><span class="n">YOUR_ELIGIBLE_API_KEY_HERE</span><span class="p">];</span>
+    <span class="k">return</span> <span class="n">YES</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>Put your query data into a dictionary:</p>
+
+<div class="highlight"><pre><span class="n">NSMutableDictionary</span> <span class="o">*</span><span class="n">formData</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSMutableDictionary</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+<span class="p">[</span><span class="n">formData</span> <span class="nl">setObject:</span><span class="n">self</span><span class="p">.</span><span class="n">payerName</span><span class="p">.</span><span class="n">text</span> <span class="nl">forKey:</span><span class="s">@"payer_name"</span><span class="p">];</span>
+<span class="p">[</span><span class="n">formData</span> <span class="nl">setObject:</span><span class="n">self</span><span class="p">.</span><span class="n">payerId</span><span class="p">.</span><span class="n">text</span> <span class="nl">forKey:</span><span class="s">@"payer_id"</span><span class="p">];</span>
+<span class="p">[</span><span class="n">formData</span> <span class="nl">setObject:</span><span class="n">self</span><span class="p">.</span><span class="n">serviceProviderFirstName</span><span class="p">.</span><span class="n">text</span> <span class="nl">forKey:</span><span class="s">@"service_provider_first_name"</span><span class="p">];</span>
+<span class="p">[</span><span class="n">formData</span> <span class="nl">setObject:</span><span class="n">self</span><span class="p">.</span><span class="n">serviceProviderLastName</span><span class="p">.</span><span class="n">text</span> <span class="nl">forKey:</span><span class="s">@"service_provider_last_name"</span><span class="p">];</span>
+<span class="p">[</span><span class="n">formData</span> <span class="nl">setObject:</span><span class="n">self</span><span class="p">.</span><span class="n">serviceProviderNPI</span><span class="p">.</span><span class="n">text</span> <span class="nl">forKey:</span><span class="s">@"service_provider_npi"</span><span class="p">];</span>
+<span class="p">[</span><span class="n">formData</span> <span class="nl">setObject:</span><span class="n">self</span><span class="p">.</span><span class="n">subscriberID</span><span class="p">.</span><span class="n">text</span> <span class="nl">forKey:</span><span class="s">@"subscriber_id"</span><span class="p">];</span>
+<span class="p">[</span><span class="n">formData</span> <span class="nl">setObject:</span><span class="n">self</span><span class="p">.</span><span class="n">subscriberFirstName</span><span class="p">.</span><span class="n">text</span> <span class="nl">forKey:</span><span class="s">@"subscriber_first_name"</span><span class="p">];</span>
+<span class="p">[</span><span class="n">formData</span> <span class="nl">setObject:</span><span class="n">self</span><span class="p">.</span><span class="n">subscriberLastName</span><span class="p">.</span><span class="n">text</span> <span class="nl">forKey:</span><span class="s">@"subscriber_last_name"</span><span class="p">];</span>
+<span class="p">[</span><span class="n">formData</span> <span class="nl">setObject:</span><span class="n">self</span><span class="p">.</span><span class="n">subscriberDOB</span><span class="p">.</span><span class="n">text</span> <span class="nl">forKey:</span><span class="s">@"subscriber_dob"</span><span class="p">];</span>
+<span class="p">[</span><span class="n">formData</span> <span class="nl">setObject:</span><span class="s">@"42"</span> <span class="nl">forKey:</span><span class="s">@"service_type_code"</span><span class="p">];</span>
+</pre></div>
+
+<p>Now find your query (like <code>service/all</code> in the <a href="https://eligibleapi.com/rest-api-v1">Eligible Docs</a> and insert it after <code>getDataFor:</code> in the following code:</p>
+
+<div class="highlight"><pre><span class="p">[</span><span class="n">BSEligibleKit</span> <span class="nl">getDataFor:</span><span class="s">@"service/all"</span> <span class="nl">withParams:</span><span class="n">formData</span> <span class="nl">success:</span><span class="o">^</span><span class="p">(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">[</span><span class="n">data</span> <span class="nl">objectForKey:</span><span class="s">@"error"</span><span class="p">])</span> <span class="p">{</span>
+      <span class="c1">//Your data is available here</span>
+      <span class="n">self</span><span class="p">.</span><span class="n">label</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="p">[</span><span class="n">recentCheck</span> <span class="nl">objectForKey:</span><span class="s">@"coverage_status"</span><span class="p">];</span>
+      <span class="c1">//You did it, you're now getting eligiblity data on iOS!</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="p">{</span>
+      <span class="c1">//Tell the user to check their data</span>
+      <span class="n">self</span><span class="p">.</span><span class="n">notificationLabel</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="p">[[</span><span class="n">data</span> <span class="nl">objectForKey:</span><span class="s">@"error"</span><span class="p">]</span> <span class="nl">objectForKey:</span><span class="s">@"follow-up_action_description"</span><span class="p">];</span>        
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="nl">failure:</span><span class="o">^</span><span class="p">(</span><span class="n">NSError</span> <span class="o">*</span><span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">self</span><span class="p">.</span><span class="n">label</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="p">[</span><span class="n">error</span> <span class="n">localizedDescription</span><span class="p">];</span>
+<span class="p">}];</span>
+</pre></div>
+
+<p>Congratulations! you are now receiving eligiblity data on iOS.</p>
+
+<hr><p>Your eligibility data is rendered into an NSDictionary that you can use in your app:</p>
+
+<div class="highlight"><pre><span class="n">self</span><span class="p">.</span><span class="n">label</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="p">[</span><span class="n">recentCheck</span> <span class="nl">objectForKey:</span><span class="s">@"coverage_status"</span><span class="p">];</span>
+</pre></div>
+
+<p>There's even a convenience singleton array that you can use to access your recent queries:</p>
+
+<div class="highlight"><pre><span class="n">NSDictionary</span> <span class="o">*</span><span class="n">recentCheck</span> <span class="o">=</span> <span class="p">[[</span><span class="n">BSEligibleKit</span> <span class="n">sharedInstance</span><span class="p">].</span><span class="n">previousQueries</span> <span class="nl">objectAtIndex:</span><span class="mi">0</span><span class="p">];</span>
+</pre></div>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Bseligiblekit maintained by <a href="https://github.com/briansoule">briansoule</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-38647209-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+
+  </body>
+</html>
