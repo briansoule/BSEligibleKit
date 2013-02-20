@@ -3,6 +3,7 @@ BSEligibleKit
 
 An intuitive and concise library for inserting Eligible data into your iOS project.
 
+The following block will pull eligible data, and asnychronously execute your code when it's finished.
 ``` objective-c
 [BSEligibleKit getDataFor:@"service/all" withParams:formData success:^(NSDictionary *data) {
   //Do things!
